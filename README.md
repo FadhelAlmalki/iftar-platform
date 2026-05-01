@@ -12,10 +12,43 @@ The Admin (Government Authority) oversees the entire system by reviewing incomin
 Overall, the Iftar Platform aims to enhance transparency, simplify permit procedures, and support community-driven Iftar initiatives in an organized and efficient manner.
 
 # Features List
+- User authentication and authorization with three distinct roles (Owner, Organizer, Government).
+- Role selection landing page  sign-up and sign-in flows.
+- Initiative creation and management for Owners.
+- Browsing available Iftar initiatives for Organizers.
+- Permit request system with approval workflow.
+- Reviewing and processing incoming permit and initiative requests.
+- PDF permit generation with QR code for verification.
+- Time-limited permits.
+- Filtering by: permit status, city and initiative status 
+-  Browse profile for all roles.
+- Contact form for user inquiries.
+- Responsive design for mobile and desktop screens.
+- Light and dark mode theming.
+- Bootstrap 5 for modern UI components.
 
 # User Stories
+As an Owner:
+- Create a new account (Sign Up).
+- Log in to the platform (Sign In).
+- Add a new Iftar initiative.
+- Browse profile and my initiatives.
+
+As an Organizer:
+- Create a new account (Sign Up).
+- Log in to the platform (Sign In).
+- Browse available Iftar initiatives.
+- Request a permit for a specific initiative.
+- Browse profile and my permits.
+
+As an Government (Admin):
+- Browse incoming permit and initiative requests.
+- Give (approve/reject) Iftar permits (incoming from Organizer).
+- Give (approve/reject) Iftar initiative (incoming from Owner).
 
 # UML
+<img width="618" style="width:100%; height:auto;" alt="iftar-platform-UML" src="assets/UML.png">
+
 
 # Wireframe
 
