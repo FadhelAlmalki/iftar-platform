@@ -49,6 +49,21 @@ As an Government (Admin):
 # UML
 <img width="618" style="width:100%; height:auto;" alt="iftar-platform-UML" src="assets/UML.png">
 
-
 # Wireframe
 
+## Landing Page:
+<img width="618" style="width:100%; height:auto;" alt="landing-page" src="assets/Landing-Page.png">
+
+## Sign in:
+<img width="618" style="width:100%; height:auto;" alt="sign-in" src="assets/Sign-in.png">
+
+## Home Page Organizer:
+<img width="618" style="width:100%; height:auto;" alt="home-page-organizer" src="assets/Home-Page-(Organizer).png">
+
+## Home Page Owner:
+<img width="618" style="width:100%; height:auto;" alt="home-page-owner" src="assets/Home-Page-(Owner).png">
+
+## Full Wireframes
+
+View all wireframes here:  
+[📄 Download Full Wireframes](assets/Wireframe-Design.pdf)
