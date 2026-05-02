@@ -35,7 +35,7 @@ def signup_view(request: HttpRequest):
             print(e)
             messages.error(request, 'Username already exists!', 'alert-danger')
 
-    return render(request, 'accounts/signup.html')
+    return render(request, 'accounts/sign_up.html')
 
 def signin_view(request: HttpRequest):
 
@@ -43,11 +43,7 @@ def signin_view(request: HttpRequest):
         return redirect('home_view')
 
     if request.method == 'POST':
-        user = authenticate(
-            request,
-            username=request.POST['username'],
-            password=request.POST['password'],
-        )
+        user = authenticate(request,username=request.POST['username'],password=request.POST['password'],)
 
         if user:
             login(request, user)
@@ -56,7 +52,7 @@ def signin_view(request: HttpRequest):
         else:
             messages.error(request, 'Invalid username or password.', 'alert-danger')
 
-    return render(request, 'accounts/signin.html')
+    return render(request, 'accounts/sign_in.html')
 
 
 def logout_view(request: HttpRequest):
