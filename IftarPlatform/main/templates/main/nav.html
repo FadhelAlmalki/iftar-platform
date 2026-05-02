@@ -1,0 +1,49 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg bg-white border-bottom">
+    <div class="container py-2">
+        <a class="navbar-brand" href="{% url 'main:home_view' %}">
+            <img src="{% static 'images/iftar_platform.png' %}" alt="Iftar Platform" height="56">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
+            <ul class="navbar-nav align-items-lg-center gap-lg-2">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'initiatives:all_initiatives_view' %}">All Initiatives</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:contact_view' %}">Contact Us</a>
+                </li>
+
+                {#{% if request.user.is_staff and perms.initiatives.add_initiative %}#}
+                <li class="nav-item">
+                    <a class="btn btn-dark btn-sm px-3 py-2" href="{% url 'initiatives:add_initiative_view' %}">Add Initiative</a>
+                </li>
+                {#{% endif %}#}
+
+                <li class="nav-item">
+                    {% if request.user.is_authenticated %}
+                    <div class="d-flex align-items-center text-nowrap">
+                        <a class="nav-link p-0" href="#">Welcome {{ request.user.username }},</a>
+                        <a class="nav-link p-0" href="#">Log Out</a>
+                    </div>
+                    {% else %}
+                    <div class="dropdown">
+                        <a class="btn btn-light btn-sm px-3 py-2 dropdown-toggle" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Account
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Sign In</a></li>
+                            <li><a class="dropdown-item" href="#">Sign Up</a></li>
+                        </ul>
+                    </div>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
