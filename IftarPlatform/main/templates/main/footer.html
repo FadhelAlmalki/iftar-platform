@@ -1,14 +1,17 @@
+{% load static %}
 <div class="container py-4 py-md-5">
     <div class="row g-4">
 
         <!-- Left side (Iftar Platform)-->
-        <div class="col-12 col-md-3">
-            <h6 class="fw-semibold mb-5">Iftar Platform</h6>
-            <ul class="list-inline mb-0 text-secondary small">
-                <li class="list-inline-item"><a href="#" class="text-decoration-none text-dark bi bi-facebook"></a></li>
-                <li class="list-inline-item"><a href="#" class="text-decoration-none text-dark bi bi-linkedin"></a></li>
-                <li class="list-inline-item"><a href="#" class="text-decoration-none text-dark bi bi-youtube"></a></li>
-                <li class="list-inline-item"><a href="#" class="text-decoration-none text-dark bi bi-instagram"></a>
+        <div class="col-12 col-md-3 text-center">
+            <a class="navbar-brand d-inline-block mb-2" href="{% url 'main:home_view' %}">
+                <img src="{% static 'images/iftar_platform.png' %}" alt="Iftar Platform" height="100">
+            </a>
+            <ul class="list-inline mb-0 small d-flex justify-content-center gap-2">
+                <li class="list-inline-item"><a href="#" class="text-decoration-none text-success fs-6 bi bi-facebook" aria-label="Facebook"></a></li>
+                <li class="list-inline-item"><a href="#" class="text-decoration-none text-success fs-6 bi bi-linkedin" aria-label="LinkedIn"></a></li>
+                <li class="list-inline-item"><a href="#" class="text-decoration-none text-success fs-6 bi bi-youtube" aria-label="YouTube"></a></li>
+                <li class="list-inline-item"><a href="#" class="text-decoration-none text-success fs-6 bi bi-instagram" aria-label="Instagram"></a>
                 </li>
             </ul>
         </div>
