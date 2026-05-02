@@ -1,0 +1,104 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Sign Up - Iftar Platform{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-5">
+
+                    <h2 class="text-center fw-bold mb-1">Create Account</h2>
+                    <p class="text-center text-secondary mb-4">Join Iftar Platform</p>
+
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- First Name & Last Name -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="first_name" class="form-control" id="first_name" placeholder="First Name" maxlength="150" required>
+                                    <label for="first_name">First Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Last Name" maxlength="150" required>
+                                    <label for="last_name">Last Name</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Username -->
+                        <div class="form-floating mb-3">
+                            <input type="text" name="username" class="form-control" id="username" placeholder="Username" maxlength="150" required>
+                            <label for="username">Username</label>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-floating mb-3">
+                            <input type="email" name="email" class="form-control" id="email" placeholder="Email" maxlength="254" required>
+                            <label for="email">Email</label>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-floating mb-3">
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
+                            <label for="password">Password</label>
+                        </div>
+
+                        <!-- Role -->
+                        <div class="form-floating mb-3">
+                            <select name="role" class="form-select" id="role" required>
+                                <option value="" disabled selected>Select your role</option>
+                                <option value="owner">Owner</option>
+                                <option value="organizer">Organizer</option>
+                            </select>
+                            <label for="role">Role</label>
+                        </div>
+
+                        <!-- Entity Name -->
+                        <div class="form-floating mb-3">
+                            <input type="text" name="entity_name" class="form-control" id="entity_name" placeholder="Entity Name" maxlength="200" required>
+                            <label for="entity_name">Entity Name</label>
+                        </div>
+
+                        <!-- Rep ID -->
+                        <div class="form-floating mb-3">
+                            <input type="text" name="rep_id" class="form-control" id="rep_id" placeholder="Representative ID" maxlength="10" minlength="10" pattern="\d{10}" title="Rep ID must be exactly 10 digits" required>
+                            <label for="rep_id">Representative ID</label>
+                        </div>
+
+                        <!-- About -->
+                        <div class="form-floating mb-3">
+                            <textarea name="about" class="form-control" id="about" placeholder="About" style="height: 100px" required></textarea>
+                            <label for="about">About</label>
+                        </div>
+
+                        <!-- Avatar -->
+                        <div class="mb-3">
+                            <label class="form-label text-secondary small">Profile Image (Optional)</label>
+                            <input type="file" name="avatar" class="form-control" accept="image/*">
+                        </div>
+
+                        <button type="submit" class="btn btn-dark w-100 py-2">
+                            Create Account
+                        </button>
+
+                        <div class="text-center mt-3">
+                            <small class="text-secondary">
+                                Already have an account?
+                                <a href="{% url 'accounts:signin_view' %}">Sign In</a>
+                            </small>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
