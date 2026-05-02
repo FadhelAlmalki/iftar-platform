@@ -1,0 +1,1 @@
+#for QR and PDF
