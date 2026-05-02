@@ -1,3 +1,5 @@
+from django.http import HttpRequest
 from django.shortcuts import render
 
-# Create your views here.
+def all_initiatives_view(request: HttpRequest):
+    return render(request, 'initiatives/all_initiatives.html')
