@@ -14,14 +14,18 @@ def initiative_detail_view(request: HttpRequest, initiative_id: int):
 def add_initiative_view(request: HttpRequest):
     cities = City.objects.all()
 
-    if not (request.user.is_staff and request.user.has_perm("initiatives.add_initiative")):
+    city_id = request.POST.get("city")
+    city = City.objects.get(id=city_id)
+
+    if not ( request.user.is_authenticated and request.user.profile.role == 'owner'):
         messages.warning(request, "You do not have permission to add an initiative.", extra_tags='alert-warning')
         return redirect("main:home_view")
 
     if request.method == 'POST':
-        new_initiative = Initiative(title = request.POST.get('title'),
+        new_initiative = Initiative(owner=request.user.profile,
+                                    title = request.POST.get('title'),
                                    description = request.POST.get('description'),
-                                   city = request.POST.get('city'),
+                                   city = city,
                                    place = request.POST.get('place'),
                                    image = request.FILES.get('image'),
                                    starts_at = request.POST.get('starts_at'),

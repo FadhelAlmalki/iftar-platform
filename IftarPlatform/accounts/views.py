@@ -15,25 +15,32 @@ def signup_view(request: HttpRequest):
     if request.method == 'POST':
         try:
             
-            new_user = User.objects.create_user(username=request.POST['username'],password=request.POST['password'],email=request.POST['email'],first_name=request.POST['first_name'],last_name=request.POST['last_name'],)
+            new_user = User.objects.create_user(
+                username=request.POST['username'],
+                password=request.POST['password'],
+                email=request.POST['email'],
+                first_name=request.POST['first_name'],
+                last_name=request.POST['last_name'],
+                )
             new_user.save()
 
         
-            Profile.objects.create(
+            profile = Profile(
                 user=new_user,
                 role=request.POST['role'],
                 entity_name=request.POST['entity_name'],
                 rep_id=request.POST['rep_id'],
                 about=request.POST['about'],
-                avatar=request.FILES.get('avatar'),
+                avatar=request.FILES.get('avatar', Profile.avatar.field.get_default()),
             )
+            profile.save()
 
             messages.success(request, 'Registered successfully!', 'alert-success')
             return redirect('accounts:signin_view')
 
         except Exception as e:
+            messages.error(request, f'Username already exists! {str(e)}', 'alert-danger')
             print(e)
-            messages.error(request, 'Username already exists!', 'alert-danger')
 
     return render(request, 'accounts/sign_up.html')
 

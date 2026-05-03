@@ -25,7 +25,7 @@
 
                     <div class="mb-3">
 						<label for="city" class="form-label">City</label>
-						<select class="form-control" id="city" name="cities" required>
+						<select class="form-control" id="city" name="city" required>
 							<option value="" selected disabled>Select a city</option>
 							{% for city in cities %}
 								<option value="{{ city.id }}">{{ city.name }}</option>
