@@ -17,11 +17,11 @@
                     <a class="nav-link" href="{% url 'main:contact_view' %}">Contact Us</a>
                 </li>
 
-                {#{% if request.user.is_staff and perms.initiatives.add_initiative %}#}
+                {% if request.user.is_authenticated and request.user.profile.role == 'owner' %}
                 <li class="nav-item">
                     <a class="btn btn-dark btn-sm px-3 py-2" href="{% url 'initiatives:add_initiative_view' %}">Add Initiative</a>
                 </li>
-                {#{% endif %}#}
+                {% endif %}
 
                 <li class="nav-item">
                     {% if request.user.is_authenticated %}
