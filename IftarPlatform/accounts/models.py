@@ -9,7 +9,7 @@ class Profile(models.Model):
         ADMIN = 'admin', 'Admin'
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    rep_id = models.CharField(max_length=10)
+    rep_id = models.CharField(max_length=10,unique=True)
     entity_name = models.CharField(max_length=200)
     about = models.TextField()
     role = models.CharField(max_length=20, choices=Role.choices)
