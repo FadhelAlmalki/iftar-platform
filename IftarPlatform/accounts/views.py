@@ -48,7 +48,7 @@ def signin_view(request: HttpRequest):
         if user:
             login(request, user)
             messages.success(request, 'Logged in successfully!', 'alert-success')
-            return redirect(request.GET.get('next', 'home_view'))
+            return redirect(request.GET.get('next', '/'))
         else:
             messages.error(request, 'Invalid username or password.', 'alert-danger')
 
