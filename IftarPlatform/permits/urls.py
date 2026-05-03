@@ -1,17 +1,20 @@
 from django.urls import path
 from . import views
 
+app_name="permits"
+
 urlpatterns = [
     
-    path('all/', views.all_permits_view, name='all_permits_view'),
-    path('detail/<int:permit_id>/', views.permit_detail_view, name='permit_detail_view'),
-    
-    
-    path('apply/<int:initiative_id>/', views.apply_for_permit_view, name='apply_for_permit_view'),
-    
-    #for Admin (accept or reject)
-    path('update-status/<int:permit_id>/<str:status>/', views.update_permit_status_view, name='update_permit_status_view'),
-    
-    # for Owner and Organizer
+    # Organizer
+    path('request/<int:initiative_id>/', views.request_permit_view, name='request_permit_view'),
     path('my-permits/', views.my_permits_view, name='my_permits_view'),
+    path('detail/<int:permit_id>/', views.permit_detail_view, name='permit_detail_view'),
+
+    # Owner
+    path('initiative/<int:initiative_id>/', views.initiative_permit_view, name='initiative_permit_view'),
+
+    # Admin
+    path('pending/', views.pending_permits_view, name='pending_permits_view'),
+    path('accept/<int:permit_id>/', views.accept_permit_view, name='accept_permit_view'),
+    path('reject/<int:permit_id>/', views.reject_permit_view, name='reject_permit_view'),
 ]

@@ -37,8 +37,8 @@
                         </a>
 
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Sign In</a></li>
-                            <li><a class="dropdown-item" href="#">Sign Up</a></li>
+                            <li><a class="dropdown-item" href="{% url 'accounts:signin_view' %}">Sign In</a></li>
+                            <li><a class="dropdown-item" href="{% url 'accounts:signup_view' %}">Sign Up</a></li>
                         </ul>
                     </div>
                     {% endif %}
