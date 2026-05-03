@@ -70,3 +70,24 @@
         font-size: 2rem;
     }
 }
+
+/* Flash overlay for global messages */
+.flash-overlay {
+    position: fixed;
+    top: 72px; /* adjust to navbar height if needed */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050;
+    width: calc(100% - 40px);
+    max-width: 980px;
+    pointer-events: none; /* allow clicks through empty areas */
+}
+.flash-overlay .container {
+    pointer-events: auto; /* allow interacting with alert inside */
+}
+.flash-overlay .alert {
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+@media (max-width:576px){
+    .flash-overlay { top: 60px; width: calc(100% - 20px); }
+}
