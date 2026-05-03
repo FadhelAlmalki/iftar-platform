@@ -1,0 +1,42 @@
+<!-- Filter Form -->
+<div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+        <form method="get" action="{% url 'initiatives:all_initiatives_view' %}" class="row g-3 align-items-end">
+
+            <div class="col-12 col-md-3">
+                <label for="permit_status" class="form-label">Permit Status</label>
+                <select id="permit_status" name="permit_status" class="form-select">
+                    <option value="" {% if not selected_permit_status %}selected{% endif %}>All statuses</option>
+                    {% for value, label in permit_statuses %}
+                    <option value="{{ value }}" {% if selected_permit_status == value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-12 col-md-3">
+                <label for="initiative_status" class="form-label">Initiative Status</label>
+                <select id="initiative_status" name="initiative_status" class="form-select">
+                    <option value="" {% if not selected_initiative_status %}selected{% endif %}>All statuses</option>
+                    {% for value, label in initiative_statuses %}
+                    <option value="{{ value }}" {% if selected_initiative_status == value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-12 col-md-3">
+                <label for="city" class="form-label">City</label>
+                <select id="city" name="city" class="form-select">
+                    <option value="" {% if not selected_city %}selected{% endif %}>All cities</option>
+                    {% for city in cities %}
+                    <option value="{{ city.id }}" {% if selected_city == city.id|stringformat:"s" %}selected{%endif %}>{{ city.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-12 col-md-3 d-flex gap-2">
+                <button type="submit" class="btn btn-dark">Filter</button>
+                <a href="{% url 'initiatives:all_initiatives_view' %}" class="btn btn-outline-secondary">Reset</a>
+            </div>
+        </form>
+    </div>
+</div> <!-- End of Filter Form -->
