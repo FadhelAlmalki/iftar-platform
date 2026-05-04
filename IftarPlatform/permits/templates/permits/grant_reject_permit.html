@@ -22,7 +22,7 @@
     {% endif %}
 {% endif %}
 {% if request.user.is_authenticated %}
-    {% if request.user.profile.role == 'admin' or request.user.profile.role == 'organizer' %}
+    {% if request.user.profile.role == 'admin' or request.user.profile.role == 'organizer' or request.user.profile.role == 'owner' %}
         {% if permit %}
             {% if permit.permit_status == 'pending' or permit.permit_status == 'accepted' or permit.permit_status == 'rejected' or permit.permit_status == 'expired' %}
 

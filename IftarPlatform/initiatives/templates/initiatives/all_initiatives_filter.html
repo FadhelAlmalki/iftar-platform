@@ -11,7 +11,7 @@
             </div>
 
             {% if request.user.is_authenticated %}
-                {% if request.user.profile.role == 'admin' %}
+                {#{% if request.user.profile.role == 'admin' %}#}
                 <div class="col-12 col-md-3">
                     <label for="permit_status" class="form-label">Permit Status</label>
                     <select id="permit_status" name="permit_status" class="form-select">
@@ -21,7 +21,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                {% endif %}
+                {#{% endif %}#}
             {% endif %}
             
             {% if request.user.is_authenticated %}

@@ -38,9 +38,16 @@ def all_initiatives_view(request: HttpRequest):
     if selected_city in valid_city_ids:
         initiatives = initiatives.filter(city__id=selected_city)
 
-    # For organizer role, show only accepted initiatives
+    # For organizer role, show initiatives they claimed plus available accepted ones that are not claimed yet
     if request.user.is_authenticated and request.user.profile.role == 'organizer':
-        initiatives = initiatives.filter(init_status='accepted')
+        initiatives = initiatives.filter(
+            Q(permit__organizer=request.user.profile)
+            | Q(init_status='accepted', permit__isnull=True)
+        ).distinct()
+
+    # For owner role, show only initiatives they own
+    if request.user.is_authenticated and request.user.profile.role == 'owner':
+        initiatives = initiatives.filter(owner=request.user.profile)
 
     #initiatives = initiatives.distinct()
 

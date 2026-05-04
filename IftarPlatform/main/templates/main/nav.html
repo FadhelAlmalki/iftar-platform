@@ -12,7 +12,7 @@
             <ul class="navbar-nav align-items-lg-center gap-lg-2">
                 
                 {% if request.user.is_authenticated %}
-                    {% if request.user.profile.role == 'admin' or request.user.profile.role == 'organizer' %}
+                    {% if request.user.profile.role == 'admin' or request.user.profile.role == 'organizer' or request.user.profile.role == 'owner' %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'initiatives:all_initiatives_view' %}">All Initiatives</a>
                     </li>
