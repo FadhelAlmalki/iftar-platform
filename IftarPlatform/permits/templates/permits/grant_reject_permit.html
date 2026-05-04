@@ -75,7 +75,7 @@
                     <small class="text-secondary text-uppercase fw-semibold">Permit File:</small>
                     <p class="mb-0">
                         {% if permit.pdf_file %}
-                            <a href="{{ permit.pdf_file.url }}" class="btn btn-sm btn-outline-dark">
+                            <a href="{{ permit.pdf_file.url }}" class="btn btn-sm btn-outline-dark" target="_blank">
                                 Download PDF
                             </a>
                         {% else %}
