@@ -2,10 +2,13 @@ from django.http import HttpRequest
 from django.contrib import messages
 from django.shortcuts import redirect, render
 
+from initiatives.models import Initiative
+
 from .models import Contact
 
 def home_view(request: HttpRequest):
-    return render(request, 'main/index.html')
+    latest_initiatives = Initiative.objects.order_by('-created_at')[:3]
+    return render(request, 'main/index.html', {'latest_initiatives': latest_initiatives})
 
 def contact_view(request: HttpRequest):
     if request.method == 'POST':
