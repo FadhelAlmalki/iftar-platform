@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}{{ initiative.title }} - Iftar Platform{% endblock %}
+
+{% block content %}
+<section class="py-2">
+    <div class="container">
+    <div class="row g-4 g-lg-5 align-items-start">
+        <div class="col-12 col-lg-5">
+            <div class="card border-0 shadow-sm overflow-hidden">
+                {% if initiative.image %}
+                <div class="ratio ratio-4x3" style="max-height:420px; overflow:hidden;">
+                    <img src="{{ initiative.image.url }}" alt="{{ initiative.title }}" class="w-100 h-100" style="object-fit: cover;">
+                </div>
+                {% else %}
+                <div class="bg-secondary-subtle d-flex align-items-center justify-content-center" style="min-height: 360px;">
+                    <span class="text-secondary">No image available</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-7">
+            <h1 class="h2 mb-2">{{ initiative.title }}</h1>
+
+            <p class="mb-2 text-muted">
+                {% if initiative.city %}
+                <span class="me-2">📍 {{ initiative.city.name }}</span>
+                {% endif %}
+                <span class="me-2">📌 {{ initiative.place }}</span>
+                <span class="me-2">Owner: {{ initiative.owner.entity_name }}</span>
+            </p>
+
+            <div class="mb-3">
+                <span class="badge text-bg-light border text-dark">{{ initiative.get_init_status_display }}</span>
+                {% if initiative.is_available %}
+                <span class="badge text-bg-success ms-2">Available</span>
+                {% else %}
+                <span class="badge text-bg-secondary ms-2">Unavailable</span>
+                {% endif %}
+                {% if permit %}
+                <span class="badge text-bg-info ms-2">Permit: {{ permit.get_permit_status_display }}</span>
+                {% else %}
+                <span class="badge text-bg-warning ms-2">No Permit</span>
+                {% endif %}
+            </div>
+
+            <p class="mb-3">{{ initiative.description }}</p>
+
+            <p class="mb-3">
+                <strong>Starts:</strong> {{ initiative.starts_at|date:"N j, Y, P" }}<br>
+                <strong>Ends:</strong> {{ initiative.ends_at|date:"N j, Y, P" }}
+            </p>
+
+        </div>
+    </div>
+    </div>
+</section>
+{% endblock %}

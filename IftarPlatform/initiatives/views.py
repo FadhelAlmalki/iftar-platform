@@ -1,5 +1,5 @@
 from django.http import HttpRequest
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Initiative, City
@@ -64,7 +64,17 @@ def all_initiatives_view(request: HttpRequest):
 
 # Initiative detail
 def initiative_detail_view(request: HttpRequest, initiative_id: int):
-    return render(request, 'initiatives/initiative_detail.html')
+    initiative = get_object_or_404(Initiative, id=initiative_id)
+    try:
+        permit = initiative.permit
+    except Exception:
+        permit = None
+
+    context = {
+        'initiative': initiative,
+        'permit': permit,
+    }
+    return render(request, 'initiatives/initiative_detail.html', context)
 
 # Add initiative
 def add_initiative_view(request: HttpRequest):
