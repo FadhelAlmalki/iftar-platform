@@ -12,7 +12,6 @@ from initiatives.models import Initiative
 #ِOrganizer
 def request_permit_view(request: HttpRequest, initiative_id: int):
 
-    # Check if user is authenticated and is an organizer
     if not request.user.is_authenticated:
         messages.error(request, 'Please sign in first.', 'alert-danger')
         return redirect('accounts:signin_view')
@@ -21,35 +20,35 @@ def request_permit_view(request: HttpRequest, initiative_id: int):
         messages.error(request, 'Only organizers can request permits.', 'alert-danger')
         return redirect('main:home_view')
 
+    if request.method != 'POST':
+        return redirect('main:home_view')
+
     initiative = get_object_or_404(Initiative, id=initiative_id)
 
-    # Check if initiative is approved
     if initiative.init_status != 'accepted':
         messages.error(request, 'This initiative is not approved yet.', 'alert-danger')
-        return redirect('initiatives:all_initiatives_view')
+        return redirect('initiatives:initiative_detail_view', initiative_id=initiative_id)
 
-    # Check if initiative already has a permit
     permit_exists = Permit.objects.filter(initiative=initiative).exists()
     if permit_exists:
         messages.error(request, 'This initiative already has a permit.', 'alert-danger')
-        return redirect('initiatives:all_initiatives_view')
+        return redirect('initiatives:initiative_detail_view', initiative_id=initiative_id)
 
-    if request.method == 'POST':
-        try:
-            Permit.objects.create(
-                organizer=request.user.profile,
-                initiative=initiative,
-                permit_number=f"IFT-{initiative_id}-{request.user.id}",
-                starts_at=initiative.starts_at,
-                expires_at=initiative.ends_at,
-            )
-            messages.success(request, 'Permit requested successfully!', 'alert-success')
-            return redirect('permits:my_permits_view')
-        except Exception as e:
-            print(e)
-            messages.error(request, 'Something went wrong.', 'alert-danger')
+    try:
+        Permit.objects.create(
+            organizer=request.user.profile,
+            initiative=initiative,
+            permit_number=f"IFT-{initiative_id}-{request.user.id}",
+            starts_at=initiative.starts_at,
+            expires_at=initiative.ends_at,
+            permit_status='pending',
+        )
+        messages.success(request, 'Permit requested successfully!', 'alert-success')
+    except Exception as e:
+        print(e)
+        messages.error(request, 'Something went wrong.', 'alert-danger')
 
-    return render(request, 'permits/request_permit.html', {'initiative': initiative})
+    return redirect('initiatives:initiative_detail_view', initiative_id=initiative_id)
 
 #ِOrganizer
 def my_permits_view(request: HttpRequest):
@@ -132,13 +131,15 @@ def pending_permits_view(request: HttpRequest):
 #ِAdmin
 def review_permit_view(request: HttpRequest, permit_id: int, action: str):
 
-    # Check if user is authenticated and is an admin
     if not request.user.is_authenticated:
         messages.error(request, 'Please sign in first.', 'alert-danger')
         return redirect('accounts:signin_view')
 
     if request.user.profile.role != 'admin':
         messages.error(request, 'Access denied.', 'alert-danger')
+        return redirect('main:home_view')
+
+    if request.method != 'POST':
         return redirect('main:home_view')
 
     permit = get_object_or_404(Permit, id=permit_id)
@@ -148,7 +149,7 @@ def review_permit_view(request: HttpRequest, permit_id: int, action: str):
             permit.permit_status = 'accepted'
             permit.generated_at = timezone.now()
             permit.save()
-            #TODO: generate QR + PDF
+            # TODO: generate QR + PDF
             messages.success(request, 'Permit accepted successfully!', 'alert-success')
 
         elif action == 'reject':
@@ -163,4 +164,4 @@ def review_permit_view(request: HttpRequest, permit_id: int, action: str):
         print(e)
         messages.error(request, 'Something went wrong.', 'alert-danger')
 
-    return redirect('permits:pending_permits_view')
+    return redirect('initiatives:initiative_detail_view', initiative_id=permit.initiative.id)

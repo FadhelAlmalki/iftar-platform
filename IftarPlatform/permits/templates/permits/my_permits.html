@@ -1,0 +1,97 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}My Permits - Iftar Platform{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <h2 class="fw-bold mb-4">My Permits</h2>
+
+    {% if permits %}
+        <div class="row g-4">
+            {% for permit in permits %}
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm border-0">
+
+                    <!-- Initiative Image -->
+                    {% if permit.initiative.image %}
+                    <img src="{{ permit.initiative.image.url }}"
+                         alt="{{ permit.initiative.title }}"
+                         class="card-img-top"
+                         style="height: 180px; object-fit: cover;">
+                    {% endif %}
+
+                    <div class="card-body">
+
+                        <!-- Initiative Title -->
+                        <h5 class="card-title fw-bold">{{ permit.initiative.title }}</h5>
+
+                        <!-- City -->
+                        <p class="text-secondary small mb-2">
+                            📍 {{ permit.initiative.city.name }}
+                        </p>
+
+                        <!-- Permit Number -->
+                        <p class="small mb-2">
+                            <span class="text-secondary fw-semibold">Permit No:</span>
+                            {{ permit.permit_number }}
+                        </p>
+
+                        <!-- Dates -->
+                        <p class="small mb-2">
+                            <span class="text-secondary fw-semibold">Starts:</span>
+                            {{ permit.starts_at|date:"N j, Y, P" }}
+                        </p>
+                        <p class="small mb-3">
+                            <span class="text-secondary fw-semibold">Expires:</span>
+                            {{ permit.expires_at|date:"N j, Y, P" }}
+                        </p>
+
+                        <!-- Permit Status Badge -->
+                        <span class="badge
+                            {% if permit.permit_status == 'pending' %}bg-warning text-dark
+                            {% elif permit.permit_status == 'accepted' %}bg-success
+                            {% elif permit.permit_status == 'rejected' %}bg-danger
+                            {% elif permit.permit_status == 'expired' %}bg-secondary
+                            {% else %}bg-light text-dark
+                            {% endif %}">
+                            {{ permit.get_permit_status_display }}
+                        </span>
+
+                    </div>
+
+                    <!-- PDF Download (لو accepted) -->
+                    {% if permit.permit_status == 'accepted' %}
+                    <div class="card-footer bg-white border-0 pb-3">
+                        {% if permit.pdf_file %}
+                            <a href="{{ permit.pdf_file.url }}"
+                               class="btn btn-outline-dark btn-sm w-100">
+                                Download Permit PDF
+                            </a>
+                        {% else %}
+                            <button class="btn btn-outline-secondary btn-sm w-100" disabled>
+                                PDF Not Generated Yet
+                            </button>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <!-- No Permits -->
+        <div class="text-center py-5">
+            <p class="text-secondary fs-5">You have no permits yet.</p>
+            <a href="{% url 'initiatives:all_initiatives_view' %}"
+               class="btn btn-dark px-4">
+                Browse Initiatives
+            </a>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

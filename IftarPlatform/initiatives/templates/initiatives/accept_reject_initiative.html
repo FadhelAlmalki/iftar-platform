@@ -1,0 +1,26 @@
+{% load static %}
+
+{% if request.user.is_authenticated and request.user.profile.role == 'admin' %}
+    {% if initiative.init_status == 'pending' %}
+
+        <hr>
+
+        <!-- Accept/Reject Initiative Buttons -->
+        <div class="d-flex gap-3 mb-4">
+            <form method="POST" action="{% url 'initiatives:review_initiative_view' initiative.id 'accept' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success px-5 py-2">
+                    Accept Initiative
+                </button>
+            </form>
+
+            <form method="POST" action="{% url 'initiatives:review_initiative_view' initiative.id 'reject' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger px-5 py-2">
+                    Reject Initiative
+                </button>
+            </form>
+        </div>
+
+    {% endif %}
+{% endif %}

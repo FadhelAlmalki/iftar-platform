@@ -65,10 +65,12 @@ def all_initiatives_view(request: HttpRequest):
 # Initiative detail
 def initiative_detail_view(request: HttpRequest, initiative_id: int):
     initiative = get_object_or_404(Initiative, id=initiative_id)
-    try:
-        permit = initiative.permit
-    except Exception:
-        permit = None
+    
+    # try:
+    #     permit = initiative.permit
+    # except Exception:
+    #     permit = None
+    permit = Permit.objects.filter(initiative=initiative).first()
 
     context = {
         'initiative': initiative,
@@ -101,3 +103,40 @@ def add_initiative_view(request: HttpRequest):
         new_initiative.save()
         return redirect("main:home_view")
     return render(request, 'initiatives/add_initiative.html', {'cities': cities})
+
+
+# Admin - review initiative
+def review_initiative_view(request: HttpRequest, initiative_id: int, action: str):
+
+    if not request.user.is_authenticated:
+        messages.error(request, 'Please sign in first.', 'alert-danger')
+        return redirect('accounts:signin_view')
+
+    if request.user.profile.role != 'admin':
+        messages.error(request, 'Access denied.', 'alert-danger')
+        return redirect('main:home_view')
+
+    if request.method != 'POST':
+        return redirect('main:home_view')
+
+    initiative = get_object_or_404(Initiative, id=initiative_id)
+
+    try:
+        if action == 'accept':
+            initiative.init_status = 'accepted'
+            initiative.save()
+            messages.success(request, 'Initiative accepted successfully!', 'alert-success')
+
+        elif action == 'reject':
+            initiative.init_status = 'rejected'
+            initiative.save()
+            messages.warning(request, 'Initiative rejected.', 'alert-warning')
+
+        else:
+            messages.error(request, 'Invalid action.', 'alert-danger')
+
+    except Exception as e:
+        print(e)
+        messages.error(request, 'Something went wrong.', 'alert-danger')
+
+    return redirect('initiatives:initiative_detail_view', initiative_id=initiative_id)
