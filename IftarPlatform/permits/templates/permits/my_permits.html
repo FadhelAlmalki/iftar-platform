@@ -61,12 +61,13 @@
 
                     </div>
 
-                    <!-- PDF Download (لو accepted) -->
+                    <!-- PDF Download (if accepted) -->
                     {% if permit.permit_status == 'accepted' %}
                     <div class="card-footer bg-white border-0 pb-3">
                         {% if permit.pdf_file %}
                             <a href="{{ permit.pdf_file.url }}"
-                               class="btn btn-outline-dark btn-sm w-100">
+                               class="btn btn-outline-dark btn-sm w-100"
+                               target="_blank">
                                 Download Permit PDF
                             </a>
                         {% else %}

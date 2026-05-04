@@ -3,6 +3,7 @@ from django.http import HttpRequest
 from django.contrib import messages
 from django.utils import timezone
 
+from .utils import generate_qr_code, generate_pdf
 from .models import Permit
 from initiatives.models import Initiative
 
@@ -148,6 +149,8 @@ def review_permit_view(request: HttpRequest, permit_id: int, action: str):
         if action == 'accept':
             permit.permit_status = 'accepted'
             permit.generated_at = timezone.now()
+            generate_qr_code(permit)
+            generate_pdf(permit)
             permit.save()
             # TODO: generate QR + PDF
             messages.success(request, 'Permit accepted successfully!', 'alert-success')
