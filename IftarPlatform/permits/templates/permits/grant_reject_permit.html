@@ -2,14 +2,37 @@
 
 {% if request.user.is_authenticated and request.user.profile.role == 'admin' %}
     {% if permit and permit.permit_status == 'pending' %}
+        <!-- Section 3: Grant/Reject Buttons -->
+        <div class="d-flex gap-3 mb-4 justify-content-center">
+            <form method="POST" action="{% url 'permits:review_permit_view' permit.id 'accept' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success px-5 py-2">
+                    Grant Permit
+                </button>
+            </form>
 
-        <hr>
+            <form method="POST" action="{% url 'permits:review_permit_view' permit.id 'reject' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger px-5 py-2">
+                    Reject Permit
+                </button>
+            </form>
+        </div>
 
-        <!-- Section 2: Organizer Info + Permit Details -->
-        <div class="row mb-4">
+    {% endif %}
+{% endif %}
+{% if request.user.is_authenticated %}
+    {% if request.user.profile.role == 'admin' or request.user.profile.role == 'organizer' %}
+        {% if permit %}
+            {% if permit.permit_status == 'pending' or permit.permit_status == 'accepted' or permit.permit_status == 'rejected' or permit.permit_status == 'expired' %}
 
-            <!-- Organizer Info -->
-            <div class="col-md-3 text-center">
+                <hr>
+
+                <!-- Section 2: Organizer Info + Permit Details -->
+                <div class="row mb-4">
+
+                    <!-- Organizer Info -->
+                    <div class="col-md-3 text-center">
                 {% if permit.organizer.avatar %}
                     <img src="{{ permit.organizer.avatar.url }}"
                          alt="{{ permit.organizer.user.get_full_name }}"
@@ -62,23 +85,7 @@
                 </div>
             </div>
         </div>
-
-        <!-- Section 3: Grant/Reject Buttons -->
-        <div class="d-flex gap-3 mb-4 justify-content-center">
-            <form method="POST" action="{% url 'permits:review_permit_view' permit.id 'accept' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-success px-5 py-2">
-                    Grant Permit
-                </button>
-            </form>
-
-            <form method="POST" action="{% url 'permits:review_permit_view' permit.id 'reject' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger px-5 py-2">
-                    Reject Permit
-                </button>
-            </form>
-        </div>
-
+            {% endif %}
+        {% endif %}
     {% endif %}
 {% endif %}
