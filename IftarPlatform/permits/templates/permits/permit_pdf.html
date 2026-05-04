@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 30px;
+    color: #333;
+}
+
+.header {
+    text-align: center;
+    border-bottom: 2px solid #333;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+}
+.header img{
+    width: 80px;
+    height: 80px;
+    margin-bottom: 5px;
+}
+
+.header h1 {
+    font-size: 22px;
+    margin: 0;
+}
+
+.header p {
+    font-size: 12px;
+    color: #666;
+    margin: 3px 0 0 0;
+}
+
+.section {
+    margin-bottom: 8px;
+}
+
+.section h2 {
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 3px;
+    margin-bottom: 3px;
+    margin-top: 0;
+}
+
+.qr-section {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.qr-section img {
+    width: 120px;
+    height: 120px;
+}
+
+.qr-section p {
+    font-size: 11px;
+    color: #666;
+    margin-top: 2px;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 10px;
+    color: #999;
+    border-top: 1px solid #ddd;
+    padding-top: 5px;
+}
+
+.status-badge {
+    background-color: #198754;
+    color: white;
+    padding: 1px 6px;
+    border-radius: 5px;
+    font-size: 11px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 2px 0;
+    font-size: 12px;
+}
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        {% load static %}
+        <img src="{{ logo_path }}">
+        <h1>Iftar Platform</h1>
+        <p>Official Iftar Initiative Permit</p>
+    </div>
+
+    <br>
+
+    <!-- Permit Info -->
+    <div class="section">
+        <h2>Permit Information</h2>
+        <table>
+            <tr>
+                <td width="160" style="font-weight: bold; color: #555;">Permit Number:</td>
+                <td>{{ permit.permit_number }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold; color: #555;">Permit Status:</td>
+                <td><span class="status-badge">{{ permit.get_permit_status_display }}</span></td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold; color: #555;">Granted At:</td>
+                <td>{{ permit.generated_at }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold; color: #555;">Starts At:</td>
+                <td>{{ permit.starts_at }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold; color: #555;">Expires At:</td>
+                <td>{{ permit.expires_at }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Initiative Info -->
+    <div class="section">
+        <h2>Initiative Information</h2>
+        <table>
+            <tr>
+                <td width="160" style="font-weight: bold; color: #555;">Title:</td>
+                <td>{{ permit.initiative.title }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold; color: #555;">City:</td>
+                <td>{{ permit.initiative.city.name }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold; color: #555;">Place:</td>
+                <td>{{ permit.initiative.place }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold; color: #555;">Owner:</td>
+                <td>{{ permit.initiative.owner.entity_name }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Organizer Info -->
+    <div class="section">
+        <h2>Organizer Information</h2>
+        <table>
+            <tr>
+                <td width="160" style="font-weight: bold; color: #555;">Entity Name:</td>
+                <td>{{ permit.organizer.entity_name }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold; color: #555;">Representative:</td>
+                <td>{{ permit.organizer.user.get_full_name }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold; color: #555;">Rep ID:</td>
+                <td>{{ permit.organizer.rep_id }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- QR Code -->
+    <div class="qr-section">
+        {% if permit.qr_code %}
+        <img src="{{ permit.qr_code.path }}">
+        <p>Scan to verify permit: {{ permit.permit_number }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>This permit is issued by Iftar Platform. Valid only for the specified initiative and time period.</p>
+        <p>Permit Number: {{ permit.permit_number }}</p>
+    </div>
+
+</body>
+</html>
