@@ -72,7 +72,8 @@ def add_initiative_view(request: HttpRequest):
         messages.warning(request, "You do not have permission to add an initiative.", extra_tags='alert-warning')
         return redirect("main:home_view")
     
-    cities = City.objects.all()
+    # cities = City.objects.all()
+    cities = City.objects.filter(is_active=True)
 
     if request.method == 'POST':
         city_id = request.POST.get("city")
