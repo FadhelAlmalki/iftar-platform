@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ihgv2eg5fgtc2$x(^@&!g+oze%lou8@x877e&)s#59*%kaal(m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ["https://iftarplatform-production.up.railway.app", "http://127.0.0.1"]
