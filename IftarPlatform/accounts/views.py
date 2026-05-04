@@ -47,7 +47,7 @@ def signup_view(request: HttpRequest):
 def signin_view(request: HttpRequest):
 
     if request.user.is_authenticated:
-        return redirect('home_view')
+        return redirect('main:home_view')
 
     if request.method == 'POST':
         user = authenticate(request,username=request.POST['username'],password=request.POST['password'],)

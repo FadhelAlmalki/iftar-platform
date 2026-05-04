@@ -26,7 +26,7 @@
                 <li class="nav-item">
                     {% if request.user.is_authenticated %}
                     <div class="d-flex align-items-center text-nowrap">
-                        <a class="nav-link p-0" href="#">Welcome {{ request.user.username }},</a>
+                        <a class="nav-link p-0" href="{% url 'accounts:user_profile_view' request.user.username %}">Welcome {{ request.user.username }},</a>
                         <a class="nav-link p-0" href="{% url 'accounts:logout_view' %}?next={{ request.path }}">Log Out</a>
                     </div>
                     {% else %}
