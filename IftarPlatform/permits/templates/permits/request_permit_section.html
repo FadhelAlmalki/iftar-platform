@@ -1,0 +1,23 @@
+{% load static %}
+
+<!-- Section 1: Request Permit - Organizer Only -->
+{% if request.user.is_authenticated and request.user.profile.role == 'organizer' %}
+    {% if initiative.init_status == 'accepted' %}
+
+        <div class="mt-4">
+            {% if not permit %}
+                <form method="POST" action="{% url 'permits:request_permit_view' initiative.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success px-5 py-2">
+                        Request a Permit
+                    </button>
+                </form>
+            {% else %}
+                <button class="btn btn-secondary px-5 py-2" disabled>
+                    Permit Already Requested
+                </button>
+            {% endif %}
+        </div>
+
+    {% endif %}
+{% endif %}
