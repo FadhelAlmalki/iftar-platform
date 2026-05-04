@@ -50,6 +50,8 @@
         </div>
     </div>
 </section>
+{% if request.user.is_authenticated %}
+{% if request.user.profile.role != 'owner' %}
 <section class="py-5">
     <div class="container">
 
@@ -106,6 +108,8 @@
         </div>
     </div>
 </section>
+{% endif %}
+{% endif %}
 <section class="py-5 bg-light border-top">
     <div class="container">
         <div class="row justify-content-center mb-4">
