@@ -1,5 +1,7 @@
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
+from django.db.models import Q
 from .models import Initiative, City
 from permits.models import Permit
 from django.contrib import messages
@@ -10,14 +12,24 @@ def all_initiatives_view(request: HttpRequest):
     initiatives = Initiative.objects.all().order_by('-created_at')
     cities = City.objects.all().order_by('name')
 
+    search_term = request.GET.get('search', '').strip()
     selected_permit_status = request.GET.get('permit_status', '').strip()
     selected_initiative_status = request.GET.get('initiative_status', '').strip()
     selected_city = request.GET.get('city', '').strip().lower()
 
+    if search_term:
+        initiatives = initiatives.filter(
+            Q(title__icontains=search_term)
+            | Q(description__icontains=search_term)
+            | Q(place__icontains=search_term)
+            | Q(city__name__icontains=search_term)
+            | Q(owner__entity_name__icontains=search_term)
+        )
+
     valid_permit_statuses = [choice[0] for choice in Permit.PermitStatus.choices]
     valid_initiative_statuses = [choice[0] for choice in Initiative.InitiativeStatus.choices]
     if selected_permit_status in valid_permit_statuses:
-        initiatives = initiatives.filter(permit__status=selected_permit_status)
+        initiatives = initiatives.filter(permit__permit_status=selected_permit_status)
 
     if selected_initiative_status in valid_initiative_statuses:
         initiatives = initiatives.filter(init_status=selected_initiative_status)
@@ -29,14 +41,24 @@ def all_initiatives_view(request: HttpRequest):
 
     #initiatives = initiatives.distinct()
 
+    paginator = Paginator(initiatives, 6)
+    page_number = request.GET.get('page')
+    initiatives_page = paginator.get_page(page_number)
+
+    filter_query = request.GET.copy()
+    filter_query.pop('page', None)
+
     context = {
-        'initiatives': initiatives,
+        'initiatives': initiatives_page,
+        'total_initiatives': paginator.count,
         'cities': cities,
         'permit_statuses': Permit.PermitStatus.choices,
         'initiative_statuses': Initiative.InitiativeStatus.choices,
+        'selected_search': search_term,
         'selected_permit_status': selected_permit_status,
         'selected_initiative_status': selected_initiative_status,
         'selected_city': selected_city,
+        'query_string': filter_query.urlencode(),
     }
     return render(request, 'initiatives/all_initiatives.html', context)
 
