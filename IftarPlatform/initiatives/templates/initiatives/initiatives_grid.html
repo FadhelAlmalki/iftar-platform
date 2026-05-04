@@ -20,11 +20,15 @@
                 <div class="mt-auto d-flex justify-content-between align-items-center">
                     <div class="d-flex flex-wrap gap-2">
                         <span class="badge rounded-pill text-bg-light border text-dark">{{ initiative.city.name }}</span>
-                        <span class="badge rounded-pill text-bg-light border text-dark">{{ initiative.get_init_status_display }}</span>
+                        {% if request.user.is_authenticated %}
+                            {% if not request.user.profile.role == 'organizer' %}
+                                <span class="badge rounded-pill text-bg-light border text-dark">Initiative: {{ initiative.get_init_status_display }}</span>
+                            {% endif %}
+                        {% endif %}
                         {% if initiative.permit %}
-                        <span class="badge rounded-pill text-bg-light border text-dark">{{ initiative.permit.get_permit_status_display }}</span>
+                        <span class="badge rounded-pill text-bg-light border text-dark">Permit: {{ initiative.permit.get_permit_status_display }}</span>
                         {% else %}
-                        <span class="badge rounded-pill text-bg-light border text-dark">No Permit</span>
+                        <span class="badge rounded-pill text-bg-light border text-dark">Permit: No Permit</span>
                         {% endif %}
                     </div>
                     <a href="{% url 'initiatives:initiative_detail_view' initiative.id %}" class="btn btn-sm btn-dark">View</a>

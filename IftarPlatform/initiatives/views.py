@@ -38,6 +38,9 @@ def all_initiatives_view(request: HttpRequest):
     if selected_city in valid_city_ids:
         initiatives = initiatives.filter(city__id=selected_city)
 
+    # For organizer role, show only accepted initiatives
+    if request.user.is_authenticated and request.user.profile.role == 'organizer':
+        initiatives = initiatives.filter(init_status='accepted')
 
     #initiatives = initiatives.distinct()
 

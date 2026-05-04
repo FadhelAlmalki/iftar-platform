@@ -23,9 +23,9 @@
             </div>
 
             <!-- Permit Details -->
-            <div class="col-md-9">
+            <div class="col-md-9 justify-content-center">
                 <div class="mb-2">
-                    <small class="text-secondary text-uppercase fw-semibold">Permit Status</small>
+                    <small class="text-secondary text-uppercase fw-semibold">Permit Status:</small>
                     <p class="mb-0">
                         <span class="badge bg-warning text-dark">
                             {{ permit.permit_status }}
@@ -33,23 +33,23 @@
                     </p>
                 </div>
                 <div class="mb-2">
-                    <small class="text-secondary text-uppercase fw-semibold">Permit Number</small>
+                    <small class="text-secondary text-uppercase fw-semibold">Permit Number:</small>
                     <p class="mb-0 fw-bold">{{ permit.permit_number }}</p>
                 </div>
                 <div class="mb-2">
-                    <small class="text-secondary text-uppercase fw-semibold">Permit Granted at</small>
+                    <small class="text-secondary text-uppercase fw-semibold">Permit Granted at:</small>
                     <p class="mb-0">{{ permit.generated_at|default:"Not granted yet" }}</p>
                 </div>
                 <div class="mb-2">
-                    <small class="text-secondary text-uppercase fw-semibold">Permit Starts at</small>
+                    <small class="text-secondary text-uppercase fw-semibold">Permit Starts at:</small>
                     <p class="mb-0">{{ permit.starts_at }}</p>
                 </div>
                 <div class="mb-2">
-                    <small class="text-secondary text-uppercase fw-semibold">Permit Expires at</small>
+                    <small class="text-secondary text-uppercase fw-semibold">Permit Expires at:</small>
                     <p class="mb-0">{{ permit.expires_at }}</p>
                 </div>
                 <div class="mb-2">
-                    <small class="text-secondary text-uppercase fw-semibold">Permit File</small>
+                    <small class="text-secondary text-uppercase fw-semibold">Permit File:</small>
                     <p class="mb-0">
                         {% if permit.pdf_file %}
                             <a href="{{ permit.pdf_file.url }}" class="btn btn-sm btn-outline-dark">
@@ -63,10 +63,8 @@
             </div>
         </div>
 
-        <hr>
-
         <!-- Section 3: Grant/Reject Buttons -->
-        <div class="d-flex gap-3 mb-4">
+        <div class="d-flex gap-3 mb-4 justify-content-center">
             <form method="POST" action="{% url 'permits:review_permit_view' permit.id 'accept' %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-success px-5 py-2">

@@ -55,7 +55,7 @@
                             {% elif permit.permit_status == 'rejected' %}bg-danger
                             {% elif permit.permit_status == 'expired' %}bg-secondary
                             {% else %}bg-light text-dark
-                            {% endif %}">
+                            {% endif %}"> Permit:
                             {{ permit.get_permit_status_display }}
                         </span>
 

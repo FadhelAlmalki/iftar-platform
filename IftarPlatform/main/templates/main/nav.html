@@ -20,7 +20,9 @@
                 {% endif %}
 
                 {% if request.user.profile.role == 'organizer' %}
-                    <a href="{% url 'permits:my_permits_view' %}">My Permits</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'permits:my_permits_view' %}">My Permits</a>
+                </li>
                 {% endif %}
 
                 <li class="nav-item">

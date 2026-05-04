@@ -3,10 +3,8 @@
 {% if request.user.is_authenticated and request.user.profile.role == 'admin' %}
     {% if initiative.init_status == 'pending' %}
 
-        <hr>
-
         <!-- Accept/Reject Initiative Buttons -->
-        <div class="d-flex gap-3 mb-4">
+        <div class="d-flex gap-3 my-4 justify-content-center">
             <form method="POST" action="{% url 'initiatives:review_initiative_view' initiative.id 'accept' %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-success px-5 py-2">
