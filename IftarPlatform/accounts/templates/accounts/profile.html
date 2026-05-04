@@ -7,7 +7,7 @@
 <div class="container py-5">
 
     <!-- ===== Section 1: Profile Info ===== -->
-    <div class="row mb-5">
+    <div class="row my-3">
 
         <!-- Avatar -->
         <div class="col-md-3 text-center">
@@ -58,59 +58,4 @@
 
         </div>
     </div>
-
-    <hr>
-
-    <!-- ===== Section 2: Filter & Cards ===== -->
-     
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
-        <h1 class="h2 mb-0">All Initiatives</h1>
-        <span class="badge text-bg-secondary">{{ total_initiatives }} initiative{{ total_initiatives|pluralize }}</span>
-    </div>
-    
-    {% include 'accounts/all_initiatives_profile_filter.html' %}
-    
-    {% include 'initiatives/initiatives_grid.html' %}
-    
-    {% if initiatives.has_other_pages %}
-    <nav class="mt-4" aria-label="Initiative pagination">
-        <ul class="pagination justify-content-center mb-0">
-            {% if initiatives.has_previous %}
-            <li class="page-item">
-                <a class="page-link"
-                    href="{% if query_string %}?{{ query_string }}&page={{ initiatives.previous_page_number }}{% else %}?page={{ initiatives.previous_page_number }}{% endif %}">Previous</a>
-            </li>
-            {% else %}
-            <li class="page-item disabled">
-                <span class="page-link">Previous</span>
-            </li>
-            {% endif %}
-    
-            {% for page_number in initiatives.paginator.page_range %}
-            <li class="page-item {% if page_number == initiatives.number %}active{% endif %}">
-                {% if page_number == initiatives.number %}
-                <span class="page-link">{{ page_number }}</span>
-                {% else %}
-                <a class="page-link"
-                    href="{% if query_string %}?{{ query_string }}&page={{ page_number }}{% else %}?page={{ page_number }}{% endif %}">{{
-                    page_number }}</a>
-                {% endif %}
-            </li>
-            {% endfor %}
-    
-            {% if initiatives.has_next %}
-            <li class="page-item">
-                <a class="page-link"
-                    href="{% if query_string %}?{{ query_string }}&page={{ initiatives.next_page_number }}{% else %}?page={{ initiatives.next_page_number }}{% endif %}">Next</a>
-            </li>
-            {% else %}
-            <li class="page-item disabled">
-                <span class="page-link">Next</span>
-            </li>
-            {% endif %}
-        </ul>
-    </nav>
-    {% endif %}
-
-</div>
 {% endblock %}
