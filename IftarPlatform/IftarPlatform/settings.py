@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-ihgv2eg5fgtc2$x(^@&!g+oze%lou8@x877e&)s#59*%kaal(m
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ["https://iftar-platform-production.up.railway.app", "http://127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = ["https://iftarplatform-production.up.railway.app", "http://127.0.0.1"]
 
 
 # Application definition
