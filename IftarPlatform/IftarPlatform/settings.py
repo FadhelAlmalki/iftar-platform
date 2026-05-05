@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ihgv2eg5fgtc2$x(^@&!g+oze%lou8@x877e&)s#59*%kaal(m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 ALLOWED_HOSTS = ["*"]
@@ -85,12 +85,12 @@ WSGI_APPLICATION = 'IftarPlatform.wsgi.application'
 
 DATABASES = {
 'default': {
-'ENGINE': 'django.db.backends.postgresql',
-'NAME': os.environ["PGDATABASE"],
-'USER': os.environ["PGUSER"],
-'PASSWORD': os.environ["PGPASSWORD"],
-'HOST': os.environ["PGHOST"],
-'PORT': os.environ["PGPORT"],
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': os.environ["PGDATABASE"],
+    'USER': os.environ["PGUSER"],
+    'PASSWORD': os.environ["PGPASSWORD"],
+    'HOST': os.environ["PGHOST"],
+    'PORT': os.environ["PGPORT"],
 }
 } if not DEBUG else {
 'default': {
